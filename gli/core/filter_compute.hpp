@@ -396,6 +396,7 @@ namespace gli {
     template <typename filter_type, dimension Dimensions, typename texture_type, typename interpolate_type,
               typename normalized_type, typename fetch_type, typename texel_type, typename T>
     inline filter_type get_filter(filter Mip, filter Min, bool Border) {
+      // TODO: use a vector instead?
       static filter_type Table[][FILTER_COUNT][2] = {
           {{nearest_mipmap_nearest<Dimensions, texture_type, interpolate_type, normalized_type, fetch_type, texel_type,
                                    std::numeric_limits<T>::is_iec559, false>::call,
