@@ -35,7 +35,7 @@ jobs:
       addons:
         apt:
           sources:
-            - ubuntu-toolchain-r-test
+            - bionic-updates
           packages:
             - llvm-toolchain-10
       env: 
