@@ -32,12 +32,10 @@ jobs:
 
     - compiler: clang-10
     - name: "Build with LLVM/Clang 10"
-      addons:
-        apt:
-          sources:
-            - bionic-updates
-          packages:
-            - llvm-toolchain-10
+      script:
+        - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+        - sudo add-apt-repository -u 'http://apt.llvm.org/bionic/ llvm-toolchain-bionic-10 main'
+        - sudo apt update && sudo apt install clang-10
       env: 
         - MATRIX_EVAL="CC=clang-10 CXX=clang++-10"
 
@@ -71,16 +69,16 @@ jobs:
         - MATRIX_EVAL="CC=gcc-10 CXX=g++-10"
 
 before_script: 
-- cmake --version
-- eval "${MATRIX_EVAL}"
-- $CC --version
-- $CXX --version
+  - cmake --version
+  - eval "${MATRIX_EVAL}"
+  - $CC --version
+  - $CXX --version
 
 script:
-- mkdir ./build
-- cd ./build
-- cmake ..
-- cmake --build .
-- ctest
-- cd ..
+  - mkdir ./build
+  - cd ./build
+  - cmake ..
+  - cmake --build .
+  - ctest
+  - cd ..
 
