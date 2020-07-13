@@ -35,7 +35,7 @@ jobs:
       script:
         - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
         - sudo add-apt-repository -u 'http://apt.llvm.org/bionic/ llvm-toolchain-bionic-10 main'
-        - sudo apt update && sudo apt install clang-10
+        - sudo apt update && sudo apt install -y clang-10
       env: 
         - MATRIX_EVAL="CC=clang-10 CXX=clang++-10"
 
