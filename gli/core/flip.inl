@@ -44,7 +44,7 @@ namespace gli {
 		  Dst->Row[1] = Src->Row[2];
 		  Dst->Row[2] = Src->Row[1];
 		  Dst->Row[3] = Src->Row[0];
-		}
+	}
       } 
       // DXT3
       else if ((Format == FORMAT_RGBA_DXT3_UNORM_BLOCK16) || (Format == FORMAT_RGBA_DXT3_SRGB_BLOCK16)) {

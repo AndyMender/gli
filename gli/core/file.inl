@@ -4,7 +4,7 @@
 
 namespace gli {
   namespace detail {
-  	// TODO: use fstream instead?
+    // TODO: use fstream instead?
     inline FILE *open_file(const char *Filename, const char *Mode) {
 #if GLM_COMPILER & GLM_COMPILER_VC
       FILE *File = nullptr;
