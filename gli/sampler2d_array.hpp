@@ -3,70 +3,71 @@
 
 #pragma once
 
+#include "core/convert_func.hpp"
+#include "core/mipmaps_compute.hpp"
 #include "sampler.hpp"
 #include "texture2d_array.hpp"
-#include "core/mipmaps_compute.hpp"
-#include "core/convert_func.hpp"
 
-namespace gli
-{
-	/// 2d array texture sampler
-	/// @tparam T Sampler can fetch, write and interpret any texture format but will expose and process the data through type T conversions.
-	/// @tparam Q Precision in term of ULPs
-	template <typename T, qualifier P = defaultp>
-	class sampler2d_array : public sampler
-	{
-	private:
-		typedef typename detail::interpolate<T>::type interpolate_type;
+namespace gli {
+  /// 2d array texture sampler
+  /// @tparam T Sampler can fetch, write and interpret any texture format but will expose and process the data through
+  /// type T conversions.
+  /// @tparam Q Precision in term of ULPs
+  template <typename T, qualifier P = defaultp>
+  class sampler2d_array : public sampler {
+   private:
+    typedef typename detail::interpolate<T>::type interpolate_type;
 
-	public:
-		typedef texture2d_array texture_type;
-		typedef typename texture_type::size_type size_type;
-		typedef typename texture_type::extent_type extent_type;
-		typedef interpolate_type level_type;
-		typedef vec<2, interpolate_type, P> normalized_type;
-		typedef vec<4, T, P> texel_type;
+   public:
+    using texture_type = texture2d_array;
+    using size_type = typename texture_type::size_type;
+    using extent_type = typename texture_type::extent_type;
+    using level_type = interpolate_type;
+    using normalized_type = vec<2, interpolate_type, P>;
+    using texel_type = vec<4, T, P>;
 
-		sampler2d_array(texture_type const& Texture, wrap Wrap, filter Mip = FILTER_NEAREST, filter Min = FILTER_NEAREST, texel_type const& BorderColor = texel_type(0, 0, 0, 1));
+    sampler2d_array(const texture_type& Texture, wrap Wrap, filter Mip = FILTER_NEAREST, filter Min = FILTER_NEAREST,
+                    const texel_type& BorderColor = texel_type(0, 0, 0, 1));
 
-		/// Access the sampler texture object
-		texture_type const& operator()() const;
+    /// Access the sampler texture object
+    const texture_type& operator()() const;
 
-		/// Fetch a texel from the sampler texture
-		texel_type texel_fetch(extent_type const& TexelCoord, size_type layer, size_type Level) const;
+    /// Fetch a texel from the sampler texture
+    texel_type texel_fetch(const extent_type& TexelCoord, size_type layer, size_type Level) const;
 
-		/// Write a texel in the sampler texture
-		void texel_write(extent_type const& TexelCoord, size_type layer, size_type Level, texel_type const& Texel);
+    /// Write a texel in the sampler texture
+    void texel_write(const extent_type& TexelCoord, size_type layer, size_type Level, const texel_type& Texel);
 
-		/// Clear the sampler texture with a uniform texel
-		void clear(texel_type const& Texel);
+    /// Clear the sampler texture with a uniform texel
+    void clear(const texel_type& Texel);
 
-		/// Sample the sampler texture at a specific level
-		texel_type texture_lod(normalized_type const& SampleCoord, size_type layer, level_type Level) const;
+    /// Sample the sampler texture at a specific level
+    texel_type texture_lod(const normalized_type& SampleCoord, size_type layer, level_type Level) const;
 
-		/// Generate all the mipmaps of the sampler texture from the texture base level
-		void generate_mipmaps(filter Minification);
+    /// Generate all the mipmaps of the sampler texture from the texture base level
+    void generate_mipmaps(filter Minification);
 
-		/// Generate the mipmaps of the sampler texture from the texture base level to the texture max level included
-		void generate_mipmaps(size_type BaseLayer, size_type MaxLayer, size_type BaseLevel, size_type MaxLevel, filter Minification);
+    /// Generate the mipmaps of the sampler texture from the texture base level to the texture max level included
+    void generate_mipmaps(size_type BaseLayer, size_type MaxLayer, size_type BaseLevel, size_type MaxLevel,
+                          filter Minification);
 
-	private:
-		typedef typename detail::convert<texture_type, T, P>::func convert_type;
-		typedef typename detail::convert<texture_type, T, P>::fetchFunc fetch_type;
-		typedef typename detail::convert<texture_type, T, P>::writeFunc write_type;
-		typedef typename detail::filterBase<detail::DIMENSION_2D, texture_type, interpolate_type, normalized_type, fetch_type, texel_type>::filterFunc filter_type;
+   private:
+    using convert_type = typename detail::convert<texture_type, T, P>::func;
+    using fetch_type = typename detail::convert<texture_type, T, P>::fetchFunc;
+    using write_type = typename detail::convert<texture_type, T, P>::writeFunc;
+    using filter_type = typename detail::filterBase<detail::DIMENSION_2D, texture_type, interpolate_type,
+						    normalized_type, fetch_type, texel_type>::filterFunc;
 
-		texture_type Texture;
-		convert_type Convert;
-		texel_type BorderColor;
-		filter_type Filter;
-	};
+    texture_type Texture;
+    convert_type Convert;
+    texel_type BorderColor;
+    filter_type Filter;
+  };
 
-	typedef sampler2d_array<float> fsampler2DArray;
-	typedef sampler2d_array<double> dsampler2DArray;
-	typedef sampler2d_array<unsigned int> usampler2DArray;
-	typedef sampler2d_array<int> isampler2DArray;
+  using fsampler2DArray = sampler2d_array<float>;
+  using dsampler2DArray = sampler2d_array<double>;
+  using usampler2DArray = sampler2d_array<unsigned int>;
+  using isampler2DArray = sampler2d_array<int>;
+}  // namespace gli
 
-}//namespace gli
-
-#include "./core/sampler2d_array.inl"
+#include "./sampler2d_array.inl"
