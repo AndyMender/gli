@@ -5,30 +5,32 @@
 
 #include "texture.hpp"
 
-namespace gli
-{
-	/// Save a texture storage_linear to a KMG (Khronos Image) file.
-	///
-	/// @param Texture Source texture to save
-	/// @param Path Path for where to save the file. It must include the filaname and filename extension.
-	/// This function ignores the filename extension in the path and save to KMG anyway but keep the requested filename extension.
-	/// @return Returns false if the function fails to save the file.
-	bool save_kmg(texture const & Texture, char const * Path);
+namespace gli {
+  /// Save a texture storage_linear to a KMG (Khronos Image) file.
+  ///
+  /// @param Texture Source texture to save
+  /// @param Path Path for where to save the file. It must include the filaname and filename extension.
+  /// This function ignores the filename extension in the path and save to KMG anyway but keep the requested filename
+  /// extension.
+  /// @return Returns false if the function fails to save the file.
+  bool save_kmg(const texture& Texture, char const* Path);
 
-	/// Save a texture storage_linear to a KMG (Khronos Image) file.
-	///
-	/// @param Texture Source texture to save
-	/// @param Path Path for where to save the file. It must include the filaname and filename extension.
-	/// This function ignores the filename extension in the path and save to KMG anyway but keep the requested filename extension.
-	/// @return Returns false if the function fails to save the file.
-	bool save_kmg(texture const & Texture, std::string const & Path);
+  /// Save a texture storage_linear to a KMG (Khronos Image) file.
+  ///
+  /// @param Texture Source texture to save
+  /// @param Path Path for where to save the file. It must include the filaname and filename extension.
+  /// This function ignores the filename extension in the path and save to KMG anyway but keep the requested filename
+  /// extension.
+  /// @return Returns false if the function fails to save the file.
+  bool save_kmg(const texture& Texture, const std::string& Path);
 
-	/// Save a texture storage_linear to a KMG (Khronos Image) file.
-	///
-	/// @param Texture Source texture to save
-	/// @param Memory Storage for the KMG container. The function resizes the containers to fit the necessary storage_linear.
-	/// @return Returns false if the function fails to save the file.
-	bool save_kmg(texture const & Texture, std::vector<char> & Memory);
-}//namespace gli
+  /// Save a texture storage_linear to a KMG (Khronos Image) file.
+  ///
+  /// @param Texture Source texture to save
+  /// @param Memory Storage for the KMG container. The function resizes the containers to fit the necessary
+  /// storage_linear.
+  /// @return Returns false if the function fails to save the file.
+  bool save_kmg(const texture& Texture, std::vector<char>& Memory);
+}  // namespace gli
 
-#include "./core/save_kmg.inl"
+#include "./save_kmg.inl"
