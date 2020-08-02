@@ -1,4 +1,4 @@
-include "levels.hpp"
+#include "levels.hpp"
 
 namespace gli {
   inline texture1d::texture1d() {}
