@@ -12,19 +12,18 @@
 #include "texture_cube.hpp"
 #include "texture_cube_array.hpp"
 
-namespace gli
-{
-	/// Compare two images. Two images are equal when the date is the same.
-	bool operator==(image const& ImageA, image const& ImageB);
+namespace gli {
+  /// Compare two images. Two images are equal when the date is the same.
+  bool operator==(const image& ImageA, const image& ImageB);
 
-	/// Compare two images. Two images are equal when the date is the same.
-	bool operator!=(image const& ImageA, image const& ImageB);
+  /// Compare two images. Two images are equal when the date is the same.
+  bool operator!=(const image& ImageA, const image& ImageB);
 
-	/// Compare two textures. Two textures are the same when the data, the format and the targets are the same.
-	bool operator==(texture const& A, texture const& B);
+  /// Compare two textures. Two textures are the same when the data, the format and the targets are the same.
+  bool operator==(const texture& A, const texture& B);
 
-	/// Compare two textures. Two textures are the same when the data, the format and the targets are the same.
-	bool operator!=(texture const& A, texture const& B);
-}//namespace gli
+  /// Compare two textures. Two textures are the same when the data, the format and the targets are the same.
+  bool operator!=(const texture& A, const texture& B);
+}  // namespace gli
 
-#include "./core/comparison.inl"
+#include "./comparison.inl"
