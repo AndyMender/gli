@@ -6,9 +6,9 @@
 
 namespace gli {
   namespace detail {
-    static unsigned char const FOURCC_KTX10[] = {0xAB, 0x4B, 0x54, 0x58, 0x20, 0x31,
+    const static unsigned char FOURCC_KTX10[] = {0xAB, 0x4B, 0x54, 0x58, 0x20, 0x31,
                                                  0x31, 0xBB, 0x0D, 0x0A, 0x1A, 0x0A};
-    static unsigned char const FOURCC_KTX20[] = {0xAB, 0x4B, 0x54, 0x58, 0x20, 0x32,
+    const static unsigned char FOURCC_KTX20[] = {0xAB, 0x4B, 0x54, 0x58, 0x20, 0x32,
                                                  0x30, 0xBB, 0x0D, 0x0A, 0x1A, 0x0A};
 
     struct ktx_header10 {
@@ -27,7 +27,7 @@ namespace gli {
       std::uint32_t BytesOfKeyValueData;
     };
 
-    inline target get_target(ktx_header10 const& Header) {
+    inline target get_target(const ktx_header10& Header) {
       if (Header.NumberOfFaces > 1) {
         if (Header.NumberOfArrayElements > 0)
           return TARGET_CUBE_ARRAY;
@@ -47,7 +47,7 @@ namespace gli {
     }
 
     inline texture load_ktx10(char const* Data, std::size_t Size) {
-      detail::ktx_header10 const& Header(*reinterpret_cast<detail::ktx_header10 const*>(Data));
+      const detail::ktx_header10& Header(*reinterpret_cast<detail::ktx_header10 const*>(Data));
 
       size_t Offset = sizeof(detail::ktx_header10);
 
@@ -55,12 +55,12 @@ namespace gli {
       Offset += Header.BytesOfKeyValueData;
 
       gl GL(gl::PROFILE_KTX);
-      gli::format const Format = GL.find(static_cast<gli::gl::internal_format>(Header.GLInternalFormat),
+      const gli::format Format = GL.find(static_cast<gli::gl::internal_format>(Header.GLInternalFormat),
                                          static_cast<gli::gl::external_format>(Header.GLFormat),
                                          static_cast<gli::gl::type_format>(Header.GLType));
       GLI_ASSERT(Format != gli::FORMAT_UNDEFINED);
 
-      texture::size_type const BlockSize = block_size(Format);
+      const texture::size_type BlockSize = block_size(Format);
 
       texture Texture(detail::get_target(Header), Format,
                       texture::extent_type(Header.PixelWidth, std::max<texture::size_type>(Header.PixelHeight, 1),
@@ -74,7 +74,7 @@ namespace gli {
 
         for (texture::size_type Layer = 0, Layers = Texture.layers(); Layer < Layers; ++Layer)
           for (texture::size_type Face = 0, Faces = Texture.faces(); Face < Faces; ++Face) {
-            texture::size_type const FaceSize = Texture.size(Level);
+            const texture::size_type FaceSize = Texture.size(Level);
 
             std::memcpy(Texture.data(Layer, Face, Level), Data + Offset, FaceSize);
 
@@ -115,5 +115,5 @@ namespace gli {
     return load_ktx(&Data[0], Data.size());
   }
 
-  inline texture load_ktx(std::string const& Filename) { return load_ktx(Filename.c_str()); }
+  inline texture load_ktx(const std::string& Filename) { return load_ktx(Filename.c_str()); }
 }  // namespace gli
