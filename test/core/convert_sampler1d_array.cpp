@@ -18,7 +18,7 @@ namespace rgba16sf {
     }
 
     {
-      gli::vec4 const Color(1.0f, 0.5f, 0.0f, 1.0f);
+      const gli::vec4 Color(1.0f, 0.5f, 0.0f, 1.0f);
       gli::texture2d Texture(gli::FORMAT_RG16_SFLOAT_PACK16, gli::texture2d::extent_type(1), 1);
       gli::detail::convertFunc<gli::texture2d, float, 2, gli::u16, gli::defaultp, gli::detail::CONVERT_MODE_HALF,
                                true>::write(Texture, gli::texture2d::extent_type(0), 0, 0, 0, Color);

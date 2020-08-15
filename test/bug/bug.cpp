@@ -1,7 +1,6 @@
 #include <gli/gli.hpp>
 
-int main()
-{
+int main() {
 	int Error = 0;
 
 	{
