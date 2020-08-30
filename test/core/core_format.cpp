@@ -1,70 +1,62 @@
 #include <gli/format.hpp>
 
-namespace valid
-{
-	int test()
-	{
-		int Error(0);
+namespace valid {
+  int test() {
+    int Error = 0;
 
-		for(std::size_t FormatIndex = gli::FORMAT_FIRST; FormatIndex < gli::FORMAT_COUNT; ++FormatIndex)
-			Error += gli::is_valid(static_cast<gli::format>(FormatIndex)) ? 0 : 1;
-		Error += !gli::is_valid(gli::FORMAT_UNDEFINED) ? 0 : 1;
+    for (std::size_t FormatIndex = gli::FORMAT_FIRST; FormatIndex < gli::FORMAT_COUNT; ++FormatIndex) {
+      Error += gli::is_valid(static_cast<gli::format>(FormatIndex)) ? 0 : 1;
+    }
 
-		return Error;
-	}
-}//namespace valid
+    Error += !gli::is_valid(gli::FORMAT_UNDEFINED) ? 0 : 1;
 
-namespace component
-{
-	int test()
-	{
-		int Error(0);
+    return Error;
+  }
+}  // namespace valid
 
-		for(std::size_t FormatIndex = gli::FORMAT_FIRST; FormatIndex < gli::FORMAT_COUNT; ++FormatIndex)
-		{
-			std::size_t const Components = gli::component_count(static_cast<gli::format>(FormatIndex));
-			Error += Components > 0 && Components <= 4 ? 0 : 1;
-			GLI_ASSERT(!Error);
-		}
+namespace component {
+  int test() {
+    int Error = 0;
 
-		return Error;
-	}
-}//namespace component
+    for (std::size_t FormatIndex = gli::FORMAT_FIRST; FormatIndex < gli::FORMAT_COUNT; ++FormatIndex) {
+      const std::size_t Components = gli::component_count(static_cast<gli::format>(FormatIndex));
+      Error += (Components > 0 && Components <= 4) ? 0 : 1;
+      GLI_ASSERT(!Error);
+    }
 
-namespace compressed
-{
-	int test()
-	{
-		int Error(0);
+    return Error;
+  }
+}  // namespace component
 
-		Error += !gli::is_compressed(gli::FORMAT_R8_SRGB_PACK8) ? 0 : 1;
-		Error += gli::is_compressed(gli::FORMAT_RGB_DXT1_SRGB_BLOCK8) ? 0 : 1;
+namespace compressed {
+  int test() {
+    int Error = 0;
 
-		return Error;
-	}
-}//namespace format
+    Error += !gli::is_compressed(gli::FORMAT_R8_SRGB_PACK8) ? 0 : 1;
+    Error += gli::is_compressed(gli::FORMAT_RGB_DXT1_SRGB_BLOCK8) ? 0 : 1;
 
-namespace block
-{
-	int test()
-	{
-		int Error(0);
+    return Error;
+  }
+}  // namespace compressed
 
-		Error += gli::block_size(gli::FORMAT_RGBA8_UNORM_PACK8) == 4 ? 0 : 1;
-		Error += gli::block_size(gli::FORMAT_RGB10A2_UNORM_PACK32) == 4 ? 0 : 1;
+namespace block {
+  int test() {
+    int Error = 0;
 
-		return Error;
-	}
-}//namespace block
+    Error += gli::block_size(gli::FORMAT_RGBA8_UNORM_PACK8) == 4 ? 0 : 1;
+    Error += gli::block_size(gli::FORMAT_RGB10A2_UNORM_PACK32) == 4 ? 0 : 1;
 
-int main()
-{
-	int Error(0);
+    return Error;
+  }
+}  // namespace block
 
-	Error += valid::test();
-	Error += component::test();
-	Error += compressed::test();
-	Error += block::test();
+int main() {
+  int Error = 0;
 
-	return Error;
+  Error += valid::test();
+  Error += component::test();
+  Error += compressed::test();
+  Error += block::test();
+
+  return Error;
 }
